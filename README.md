@@ -37,8 +37,6 @@ A financial risk simulation analyzing the Martingale strategy versus Flat (Safe)
 
 ## 📈 Simulation Results
 
-*(Nhà tuyển dụng / Người xem sẽ nhìn thấy biểu đồ trực quan của bạn ở ngay đây)*
-
 ### Result Analysis:
 1. **Martingale:** Yields frequent small wins but is highly susceptible to instant bankruptcy when hitting a long losing streak.
 2. **Flat Betting:** Results in slow, steady capital depletion due to the built-in house edge.
