@@ -2,17 +2,33 @@
 #include "BettingStrategy.h"
 #include <cmath>
 #include <algorithm>
-class MartingaleStrategy : public BettingStrategy {
+
+class ChungThuyStrategy : public BettingStrategy {
 public:
-    double calculateBet(double balance, double baseBet, int losses) override {
+    std::map<Symbol, double> calculateBets(double balance, double baseBet, int losses) const override {
+        std::map<Symbol, double> bets;
         double amount = baseBet * std::pow(2, losses);
-        return std::min(amount, balance);
-    }
-};
-class SafeStrategy : public BettingStrategy {
-public:
-    double calculateBet(double balance, double baseBet, int losses) override {
-        return std::min(baseBet, balance);
+        amount = std::min(amount, balance);
+
+        if (amount > 0) {
+            bets[Symbol::BAU] = amount;
+        }
+        return bets;
     }
 };
 
+class RaiThamStrategy : public BettingStrategy {
+public:
+    std::map<Symbol, double> calculateBets(double balance, double baseBet, int losses) const override {
+        std::map<Symbol, double> bets;
+
+        double splitBet = std::min(baseBet, balance / 3.0);
+
+        if (splitBet > 0) {
+            bets[Symbol::BAU] = splitBet;
+            bets[Symbol::CUA] = splitBet;
+            bets[Symbol::TOM] = splitBet;
+        }
+        return bets;
+    }
+};

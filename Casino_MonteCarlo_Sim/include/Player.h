@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <string>
 #include <memory>
+#include <map>
 #include "BettingStrategy.h"
 
 class Player {
@@ -12,20 +13,20 @@ private:
     std::unique_ptr<BettingStrategy> strategy;
 
 public:
-    Player(std::string n, double bal, double bBet, std::unique_ptr<BettingStrategy> strat)
+    Player(const std::string& n, double bal, double bBet, std::unique_ptr<BettingStrategy> strat)
         : name(n), balance(bal), baseBet(bBet), strategy(std::move(strat)) {
     }
 
     std::string getName() const { return name; }
     double getBalance() const { return balance; }
 
-    double getBetAmount() {
-        return strategy->calculateBet(balance, baseBet, consecutiveLosses);
+    std::map<Symbol, double> getBets() const {
+        return strategy->calculateBets(balance, baseBet, consecutiveLosses);
     }
 
-    void updateBalance(double change) {
-        balance += change;
-        if (change < 0) consecutiveLosses++;
+    void updateBalance(double netChange) {
+        balance += netChange;
+        if (netChange < 0) consecutiveLosses++;
         else consecutiveLosses = 0;
     }
 };

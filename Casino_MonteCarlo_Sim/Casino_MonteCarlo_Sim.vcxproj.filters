@@ -6,6 +6,7 @@
     <ClInclude Include="include\PlayerFactory.h" />
     <ClInclude Include="include\Simulator.h" />
     <ClInclude Include="include\Strategies.h" />
+    <ClInclude Include="include\House.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
@@ -30,5 +31,7 @@
     <None Include="data\data_14.csv" />
     <None Include="data\data_15.csv" />
     <None Include="data\data_16.csv" />
+    <None Include="scripts\bao_cao_nhacai_nho.py" />
+    <None Include="scripts\bao_cao_nhacai_lon.py" />
   </ItemGroup>
 </Project>

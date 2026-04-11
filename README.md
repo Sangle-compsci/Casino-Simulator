@@ -1,57 +1,74 @@
-﻿# 🎲 Monte Carlo Casino Simulation
-### Martingale vs. Flat Betting Strategy
+﻿# 🎲 Monte Carlo Casino Simulation: The Mathematics of "Bầu Cua"
 
 ![C++](https://img.shields.io/badge/C%2B%2B-17-blue?style=flat-square&logo=c%2B%2B)
 ![Python](https://img.shields.io/badge/Python-3.10-yellow?style=flat-square&logo=python)
+![Multithreading](https://img.shields.io/badge/Concurrency-Multi--threaded-success?style=flat-square)
 
-A financial risk simulation analyzing the Martingale strategy versus Flat (Safe) Betting using the Monte Carlo method.
-
----
-
-## 🚀 Key Features
-
-* **Multi-threading Engine:**
-  - Maximizes CPU utilization across 16 threads.
-  - Simulates millions of betting rounds in mere seconds.
-* **Object-Oriented Design (OOP):**
-  - **Strategy Pattern:** Enables flexible management and swapping of betting algorithms.
-  - **Factory Pattern:** Streamlines player object initialization.
-* **Automated Data Pipeline:**
-  - C++ engine handles heavy logic computation and outputs raw CSV data.
-  - Automatically triggers a Python script for data parsing and chart plotting.
+A high-performance financial risk simulation applying the Monte Carlo method to analyze the statistical variance and inevitability of **Gambler's Ruin**. This major update models the traditional Vietnamese 3-dice game **"Bầu Cua"** (similar to Crown and Anchor), pitting multiple betting portfolios against the casino's mathematical advantage.
 
 ---
 
-## 🛠️ System Architecture
+## 🧮 The Mathematical Core: Proving the 7.87% House Edge
 
-### 1. C++ Core (Simulation Layer)
-* **Probability:** Implements a standard Casino House Edge (48.6% win rate).
-* **Randomness:** Utilizes the high-quality `mt19937` (Mersenne Twister) random number generator.
-* **Performance:** Features a **No-Mutex** architecture to avoid thread bottlenecks and optimize file I/O speed.
+The centerpiece of this simulation is the absolute power of the **Expected Value (EV)**. Unlike a simple coin flip, Bầu Cua uses 3 independent dice with 6 faces. The payout structure creates a surprisingly high House Edge. 
 
-### 2. Python Analysis (Visualization)
-* **Statistics:** Calculates Expected Value (EV) across 16 independent parallel universes.
-* **Visualization:** Automatically plots a 3-chart comparison panel showing rapid bankruptcy (worst-case), prolonged survival (best-case), and the mathematical average.
+If a player bets 1 unit on a single symbol (e.g., "Gourd"), the mathematical probability space is:
+
+* **Lose (0 matches):** Probability $= (5/6)^3 = 125/216 \approx 57.87\%$. (Net: -1)
+* **Win 1 Match:** Probability $= \binom{3}{1} \times (1/6) \times (5/6)^2 = 75/216 \approx 34.72\%$. (Net: +1)
+* **Win 2 Matches:** Probability $= \binom{3}{2} \times (1/6)^2 \times (5/6) = 15/216 \approx 6.94\%$. (Net: +2)
+* **Win 3 Matches:** Probability $= \binom{3}{3} \times (1/6)^3 \times (5/6)^0 = 1/216 \approx 0.46\%$. (Net: +3)
+
+**Calculating the Expected Value (EV):**
+$$EV = \left(-1 \times \frac{125}{216}\right) + \left(1 \times \frac{75}{216}\right) + \left(2 \times \frac{15}{216}\right) + \left(3 \times \frac{1}{216}\right)$$
+$$EV = \frac{-125 + 75 + 30 + 3}{216} = \frac{-17}{216} \approx -0.0787$$
+
+> **💡 Mathematical Conclusion:** The Casino holds a **7.87% House Edge**. This is nearly 3 times higher than European Roulette (2.7%). The simulation proves that in the long run, players lose ~7.87 units for every 100 units wagered, making long-term survival mathematically impossible.
 
 ---
 
-## 📈 Simulation Results
+## 🚀 System Architecture
 
-### Result Analysis:
-1. **Martingale:** Yields frequent small wins but is highly susceptible to instant bankruptcy when hitting a long losing streak.
-2. **Flat Betting:** Results in slow, steady capital depletion due to the built-in house edge.
-3. **Conclusion:** All paths eventually converge to $0 (The Gambler's Ruin).
+* **Multi-threading Engine:** Maximizes CPU utilization by automatically load-balancing 100+ million rounds across 16 threads using a **No-Mutex** architecture.
+* **OOP Design Patterns:**
+    * **Strategy Pattern (`BettingStrategy.h`):** Dynamically injects betting logic. Evaluates two distinct strategies:
+        1.  **Chung Thủy (Martingale):** Single-target betting with exponential bet sizing to chase losses.
+        2.  **Rải Thảm (Spread Betting):** Dividing capital across 3 symbols to minimize variance.
+    * **Factory Pattern (`PlayerFactory.h`):** Streamlines the initialization of player portfolios.
+* **Automated Data Pipeline:** C++17 handles the heavy probabilistic computation, instantly triggering a Python/Pandas script to parse the CSV outputs and render multi-dimensional charts (incorporating Forward-Fill algorithms to normalize early bankruptcies).
+
+---
+
+## 🧪 Simulation Scenarios & Result Analysis
+
+The system splits the multi-threaded simulation into 2 parallel universes to observe the clash between **Short-term Variance** and the **Law of Large Numbers**:
+
+### 1. Scenario: Small House Capital (`data_nho`)
+Testing short-term risk thresholds where the house is vulnerable to high variance.
+<p align="center">
+  <img src="assets/von_nha_cai_nho.png" width="900" alt="Small House Result">
+</p>
+
+* **The Volatility Threat:** When the casino's bankroll is small, the Law of Large Numbers hasn't taken effect. A player using an aggressive Martingale strategy can create massive financial shocks. As seen in the "Fastest" chart, the casino can be bankrupted in mere seconds if the player hits a lucky streak.
+
+### 2. Scenario: Large House Capital (`data_lon`)
+Observing the absolute power of Probability where house victory is a mathematical certainty.
+<p align="center">
+  <img src="assets/von_nha_cai_lon.png" width="900" alt="Large House Result">
+</p>
+
+* **The Inevitability of Gambler's Ruin:** When the casino has sufficient capital to absorb all variance, the game shifts to a mathematical limit problem ($N \rightarrow \infty$). Even with a massive starting capital of 800,000 VNĐ, both the Spread and Martingale players are mathematically crushed by the 7.87% House Edge. The EV curve dictates a flawless, uninterrupted plunge to $0.
 
 ---
 
 ## ⚙️ Setup & Usage
 
 ### 1. Prerequisites
-Create an empty `data/` folder in the root directory of the project to store output logs.
+* Ensure you create an empty folder named `data/` in the project's root directory for the C++ engine to store output logs.
+* A modern C++ compiler supporting **C++17** (for Structured Bindings and Filesystem APIs).
 
-### 2. Python Dependencies
-Run the following command in your terminal to install the required libraries:
-
+### 2. Python Environment Setup
+This project uses Python for automated data visualization. Open your terminal and install the required libraries:
 ```bash
 pip install pandas matplotlib numpy
 ```
