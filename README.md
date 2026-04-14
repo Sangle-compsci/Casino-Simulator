@@ -46,7 +46,7 @@ The system splits the multi-threaded simulation into 2 parallel universes to obs
 ### 1. Scenario: Small House Capital (`data_nho`)
 Testing short-term risk thresholds where the house is vulnerable to high variance.
 <p align="center">
-  <img src="assets/von_nha_cai_nho.png" width="900" alt="Small House Result">
+  <img src="assets/Von_Nha_Cai_Nho.png" width="900" alt="Small House Result">
 </p>
 
 * **The Volatility Threat:** When the casino's bankroll is small, the Law of Large Numbers hasn't taken effect. A player using an aggressive Martingale strategy can create massive financial shocks. As seen in the "Fastest" chart, the casino can be bankrupted in mere seconds if the player hits a lucky streak.
@@ -54,7 +54,7 @@ Testing short-term risk thresholds where the house is vulnerable to high varianc
 ### 2. Scenario: Large House Capital (`data_lon`)
 Observing the absolute power of Probability where house victory is a mathematical certainty.
 <p align="center">
-  <img src="assets/von_nha_cai_lon.png" width="900" alt="Large House Result">
+  <img src="assets/Von_Nha_Cai_Lon.png" width="900" alt="Large House Result">
 </p>
 
 * **The Inevitability of Gambler's Ruin:** When the casino has sufficient capital to absorb all variance, the game shifts to a mathematical limit problem ($N \rightarrow \infty$). Even with a massive starting capital of 800,000 VNĐ, both the Spread and Martingale players are mathematically crushed by the 7.87% House Edge. The EV curve dictates a flawless, uninterrupted plunge to $0.
