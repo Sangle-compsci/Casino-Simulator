@@ -46,7 +46,7 @@ int main() {
     }
 
     for (unsigned int i = 1; i <= halfThreads; ++i) {
-        workers.push_back(std::thread(runSimulationNode, i, simsPerThread, 5000000.0, "data_lon"));
+        workers.push_back(std::thread(runSimulationNode, i, simsPerThread, 6000000.0, "data_lon"));
     }
 
     for (auto& t : workers) {
